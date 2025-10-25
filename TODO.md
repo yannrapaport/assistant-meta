@@ -34,6 +34,16 @@ _Nothing currently in progress_
 - ✅ Status line integration
 - ✅ Multi-assistant support
 - ✅ GitHub repository setup
+- ✅ **Migration tooling**: Created scripts to reorganize assistant library
+  - ✅ `create-assistant-repo.sh` - Generate new assistant repos from template
+  - ✅ `migrate-assistants.sh` - Extract assistants from Notion to individual git repos
+  - ✅ Successfully migrated all 6 assistants to independent repositories
+- ✅ **Status line fix**: Updated settings.json to properly display active assistants
+- ✅ **Permissions configuration**: Added default allow rules for common operations
+  - ✅ File operations (Read, Write, Edit, Glob) in home directory
+  - ✅ Notion API calls and database access
+  - ✅ Git operations (commit, init)
+  - ✅ Common bash commands (curl, python3, etc.)
 
 ## Ideas / Future
 
