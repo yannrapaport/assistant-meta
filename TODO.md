@@ -25,6 +25,13 @@ _Nothing currently in progress_
   - Best practices for assistant design
   - Template for new assistants
 
+### Bugs / Issues
+
+- **Status line showing raw JSON**: Currently displaying raw JSON output instead of formatted status bar
+  - Output: `{"sections": [{"text": "🤖 Meta Assistant", "color": "blue"},{"text": "📁 assistant-meta"}]}`
+  - Expected: Formatted status bar with colored sections
+  - May require Claude Code restart or version-specific configuration
+
 ## Completed
 
 - ✅ Initial assistant-meta structure
@@ -44,6 +51,13 @@ _Nothing currently in progress_
   - ✅ Notion API calls and database access
   - ✅ Git operations (commit, init)
   - ✅ Common bash commands (curl, python3, etc.)
+- ✅ **Token optimization**: Reduced assistant from 799 to 318 words (-60%)
+  - ✅ Extracted verbose content to docs/ (notion-api.md, workflows.md, compacting.md)
+  - ✅ Implemented local-first loading with .meta tracking
+  - ✅ Added lazy loading for docs extensions
+  - ✅ Created compacting feature in /save-assistant
+  - ✅ Documented optimization pattern for other assistants
+  - ✅ Token savings: ~620 tokens per load
 
 ## Ideas / Future
 
