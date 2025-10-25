@@ -8,6 +8,7 @@ Manage Claude Code assistants and configurations:
 - Create and save assistants to Notion database
 - Update existing assistants
 - Configure Claude Code features (hooks, commands, status line)
+- Debug status line issues (check settings.json, script output)
 - Optimize assistant token usage
 - Maintain sync between git and Notion
 
@@ -17,6 +18,7 @@ Manage Claude Code assistants and configurations:
 **Save to Notion**: `/save-assistant` command
 **Load assistant**: `/load-assistant <path|name|url>`
 **Compact assistant**: Auto-minimize token usage when saving
+**Status line**: Configure in `~/.config/claude-code/settings.json`
 
 ## Prerequisites
 
