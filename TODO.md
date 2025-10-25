@@ -58,6 +58,16 @@ _Nothing currently in progress_
   - ✅ Created compacting feature in /save-assistant
   - ✅ Documented optimization pattern for other assistants
   - ✅ Token savings: ~620 tokens per load
+- ✅ **Batch optimization of all assistants**: Optimized 5 assistants (Oct 2025)
+  - ✅ Git Assistant: 601 → 227 words (-62%, ~486 tokens saved)
+  - ✅ LinkedIn Post Writer: 530 → 269 words (-49%, ~339 tokens saved)
+  - ✅ Content Manager: 579 → 342 words (-41%, ~308 tokens saved)
+  - ✅ Expert Prompt Writer: 701 → 280 words (-60%, ~547 tokens saved)
+  - ✅ Product Idea Brainstormer: 799 → 365 words (-54%, ~564 tokens saved)
+  - ✅ Context Manager: Deprecated (superseded by Meta Assistant)
+  - ✅ Total savings: ~3,519 tokens across all assistants
+  - ✅ Created 20 docs files with 8,366 words of extracted content
+  - ✅ Measurement tools: count-tokens.py, measure-optimization.sh
 
 ## Ideas / Future
 
