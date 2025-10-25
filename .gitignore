@@ -1,0 +1,11 @@
+# Active assistants tracking (session-specific)
+.active-assistants
+
+# Notion credentials (if copied here)
+notion-config.sh
+
+# OS files
+.DS_Store
+
+# Temporary files
+*.tmp
