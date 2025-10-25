@@ -14,9 +14,8 @@ Manage Claude Code assistants and configurations:
 
 ## Quick Reference
 
-**Create assistant**: Use `tools/create-assistant-repo.sh`
-**Save to Notion**: `/save-assistant` command
 **Load assistant**: `/load-assistant <path|name|url>`
+**Save/Create assistant**: `/save-assistant` (interactive - creates or updates)
 **Compact assistant**: Auto-minimize token usage when saving
 **Status line**: Configure in `~/.config/claude-code/settings.json`
 
@@ -39,11 +38,24 @@ Manage Claude Code assistants and configurations:
 - Draft - Work in progress
 - Ready - Production ready
 
+## Loading Assistants
+
+Assistants can be loaded from multiple sources (checked in order):
+
+1. **Same-level repos** (default): `~/Documents/Dev/assistant-{name}/`
+2. **Local path**: `/path/to/assistant/` or `./assistant.md`
+3. **GitHub URL**: Auto-checkout to temporary or persistent location
+4. **Notion reference**: Fetch page, extract GitHub link, auto-checkout
+
+**Example**: `/load-assistant git-assistant` checks:
+- `~/Documents/Dev/assistant-git-assistant/assistant.md`
+- Notion database for "Git Assistant" → GitHub link → checkout
+
 ## Local-First Approach
 
 **Always prioritize local git repositories over Notion API calls:**
 
-1. Load from `./assistant.md` or `~/Documents/Dev/assistant-*/assistant.md`
+1. Load from local first (same-level repos or specified path)
 2. Check `.meta` file for sync status (git hash comparison)
 3. Only fetch from Notion if local not found or user explicitly requests
 4. Only push to Notion when changes detected or user requests
