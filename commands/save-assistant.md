@@ -79,6 +79,9 @@ EOF
    source ~/.config/claude-code/notion-config.sh
    DATABASE_ID="29686de33aad807fbea3edb4899d1d2b"
 
+   # Get GitHub URL from git remote if available
+   GITHUB_URL=$(git remote get-url origin 2>/dev/null || echo "")
+
    # Parse assistant.md into Notion blocks
    # (Use python script or manual construction)
 
@@ -92,7 +95,8 @@ EOF
          \"Nom\": { \"title\": [{ \"text\": { \"content\": \"$NAME\" } }] },
          \"Description\": { \"rich_text\": [{ \"text\": { \"content\": \"$DESCRIPTION\" } }] },
          \"Category\": { \"select\": { \"name\": \"$CATEGORY\" } },
-         \"Status\": { \"select\": { \"name\": \"$STATUS\" } }
+         \"Status\": { \"select\": { \"name\": \"$STATUS\" } },
+         \"github\": { \"url\": \"$GITHUB_URL\" }
        },
        \"children\": $BLOCKS
      }")
@@ -176,11 +180,14 @@ If updating:
    ```bash
    PAGE_ID=$(jq -r '.notion_page_id' .meta)
 
+   # Get GitHub URL from git remote if available
+   GITHUB_URL=$(git remote get-url origin 2>/dev/null || echo "")
+
    if [ -z "$PAGE_ID" ] || [ "$PAGE_ID" = "null" ]; then
        echo "No Notion page linked. Create new page? (y/n)"
        # If yes, create new page (same as Step 2a #6)
    else
-       # Update existing page
+       # Update existing page properties
        curl -X PATCH "https://api.notion.com/v1/pages/$PAGE_ID" \
          -H "Authorization: Bearer $NOTION_API_KEY" \
          -H "Notion-Version: $NOTION_VERSION" \
@@ -188,7 +195,8 @@ If updating:
          -d "{
            \"properties\": {
              \"Description\": { \"rich_text\": [{ \"text\": { \"content\": \"$DESCRIPTION\" } }] },
-             \"Status\": { \"select\": { \"name\": \"$STATUS\" } }
+             \"Status\": { \"select\": { \"name\": \"$STATUS\" } },
+             \"github\": { \"url\": \"$GITHUB_URL\" }
            }
          }"
 

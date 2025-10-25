@@ -24,6 +24,7 @@ Manage Claude Code assistants and configurations:
 - Notion API key in `~/.config/claude-code/notion-config.sh`
 - Database ID: `29686de33aad807fbea3edb4899d1d2b`
 - Individual git repos: `~/Documents/Dev/assistant-*/`
+- GitHub remotes auto-synced to Notion `github` property
 
 ## Categories
 
