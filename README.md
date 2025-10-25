@@ -49,6 +49,7 @@ Once loaded, Meta Assistant can:
 assistant-meta/
 ├── README.md                    # This file
 ├── assistant.md                 # Meta Assistant prompt/instructions
+├── TODO.md                      # Persistent todo list for this assistant
 ├── install.sh                   # Bootstrap installer
 ├── commands/
 │   ├── load-assistant.md        # Load assistant command
@@ -121,6 +122,18 @@ Meta Assistant is itself managed by Meta Assistant! To update:
 2. Make changes to the assistant
 3. Use `/save-assistant` to update both git and Notion
 4. Run `./install.sh` to update bootstrap commands if needed
+
+### TODO List
+
+Each assistant includes a `TODO.md` file for tracking:
+- In-progress work
+- Planned features
+- Completed tasks
+- Future ideas
+
+See [TODO.md](TODO.md) for current Meta Assistant tasks.
+
+When you make progress on a todo item, update the TODO.md and use `/save-assistant` to commit the changes.
 
 ## Requirements
 
