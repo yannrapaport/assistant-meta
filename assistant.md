@@ -18,6 +18,7 @@ Manage Claude Code assistants and configurations:
 **Save/Create assistant**: `/save-assistant` (interactive - creates or updates)
 **Compact assistant**: Auto-minimize token usage when saving
 **Status line**: Configure in `~/.config/claude-code/settings.json`
+**Auto-load on startup**: Add SessionStart hook (see Prerequisites)
 
 ## Prerequisites
 
@@ -25,6 +26,15 @@ Manage Claude Code assistants and configurations:
 - Database ID: `29686de33aad807fbea3edb4899d1d2b`
 - Individual git repos: `~/Documents/Dev/assistant-*/`
 - GitHub remotes auto-synced to Notion `github` property
+- **Auto-load**: Add to `~/.config/claude-code/settings.json`:
+  ```json
+  "hooks": {
+    "SessionStart": [{
+      "matcher": "",
+      "hooks": [{"type": "prompt", "prompt": "/load-assistant meta"}]
+    }]
+  }
+  ```
 
 ## Categories
 
