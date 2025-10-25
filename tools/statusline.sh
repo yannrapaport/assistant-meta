@@ -12,7 +12,7 @@ ASSISTANTS_LIST=""
 
 if [ -f "$ASSISTANTS_FILE" ]; then
     # Read all active assistants (one per line)
-    ASSISTANTS_LIST=$(cat "$ASSISTANTS_FILE" | tr '\n' ', ' | sed 's/, $//')
+    ASSISTANTS_LIST=$(cat "$ASSISTANTS_FILE" | paste -sd ',' - )
 fi
 
 # Build status line sections
