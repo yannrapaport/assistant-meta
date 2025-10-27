@@ -16,6 +16,7 @@ Manage Claude Code assistants and configurations:
 
 **Load assistant**: `/load-assistant <path|name|url>`
 **Save/Create assistant**: `/save-assistant` (interactive - creates or updates)
+**Sync to Notion**: `tools/push-to-notion.sh [assistant-dir]`
 **Compact assistant**: Auto-minimize token usage when saving
 **Status line**: Configure in `~/.config/claude-code/settings.json`
 **Auto-load on startup**: Add SessionStart hook (see Prerequisites)
