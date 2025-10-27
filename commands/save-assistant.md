@@ -10,6 +10,17 @@ Save a new assistant or update an existing one with automatic token optimization
 
 **Your task:**
 
+## Step 0: Ensure Meta Assistant is Loaded
+
+**IMPORTANT:** Before proceeding, check if Meta Assistant is currently active.
+
+If Meta Assistant is not loaded:
+1. Load it first: `/load-assistant meta`
+2. Wait for it to load completely
+3. Then proceed with the save-assistant logic below
+
+If Meta Assistant is already loaded, proceed directly to Step 1.
+
 ## Step 1: Determine Intent
 
 Use AskUserQuestion to ask:

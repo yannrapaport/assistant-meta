@@ -11,7 +11,17 @@ Load a specialized assistant to help with specific tasks.
 
 **Your task:**
 
-1. **Local-First Search (Priority Order):**
+## Step 0: Check if Loading Meta Assistant
+
+**IMPORTANT:** If the assistant being loaded is Meta Assistant itself:
+- Skip this step and proceed directly to Step 1
+- Do NOT create infinite recursion by trying to load Meta to load Meta
+
+If loading any other assistant that may need Meta capabilities:
+- Meta will be auto-loaded by `/save-assistant` when needed
+- No need to pre-load Meta here
+
+## Step 1: Local-First Search (Priority Order)
 
    Search in this order, use first match found:
 
