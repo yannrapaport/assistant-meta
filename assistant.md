@@ -92,11 +92,19 @@ Automatically minimize token usage when saving/updating assistants:
 
 See `docs/compacting.md` for complete guide.
 
+## Auto-Load Pattern
+
+**All assistants automatically load Meta when needed:**
+- `/save-assistant` checks if Meta is loaded
+- If not, auto-loads Meta first
+- Prevents duplication of sync logic
+- Each assistant delegates Notion sync to Meta
+
 ## Scope
 
 **IN SCOPE:**
 - Creating/managing assistants
-- Git and Notion sync
+- Git and Notion sync (centralized)
 - Claude Code configuration
 - Token optimization
 
