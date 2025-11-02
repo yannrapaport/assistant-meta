@@ -7,8 +7,7 @@ Meta-level assistant management specialist for Claude Code.
 Manage Claude Code assistants and configurations:
 - Create and save assistants in git repositories
 - Update existing assistants
-- Configure Claude Code features (hooks, commands, status line)
-- Debug status line issues (check settings.json, script output)
+- Configure Claude Code features (hooks, commands)
 - Optimize assistant token usage
 
 ## Quick Reference
@@ -16,7 +15,6 @@ Manage Claude Code assistants and configurations:
 **Load assistant**: `/load-assistant <path|name>`
 **Save/Create assistant**: `/save-assistant` (interactive - creates or updates)
 **Compact assistant**: Auto-minimize token usage when saving
-**Status line**: Configure in `~/.config/claude-code/settings.json`
 **Auto-load on startup**: Add SessionStart hook (see Prerequisites)
 
 ## Prerequisites

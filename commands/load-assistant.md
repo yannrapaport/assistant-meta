@@ -58,17 +58,4 @@ If loading any other assistant that may need Meta capabilities:
    - Show source: file path
    - Note: "Extensions available: workflows, compacting" (if docs/ exists)
 
-5. **Add to active assistants list:**
-
-   ```bash
-   ASSISTANT_NAME="Meta Assistant"  # Extract from first # heading
-   ASSISTANTS_FILE=".active-assistants"
-
-   touch "$ASSISTANTS_FILE"
-
-   if ! grep -qx "$ASSISTANT_NAME" "$ASSISTANTS_FILE"; then
-       echo "$ASSISTANT_NAME" >> "$ASSISTANTS_FILE"
-   fi
-   ```
-
 Be concise and efficient. Don't over-explain - just load the context and confirm it's ready.
