@@ -67,17 +67,8 @@ If creating new:
    echo "$COMPACTED_CONTENT" > assistant.md
 
    # Create extracted docs
-   echo "$API_DOCS" > docs/notion-api.md  # if applicable
+   echo "$API_DOCS" > docs/api.md  # if applicable
    echo "$WORKFLOWS" > docs/workflows.md  # if applicable
-
-   # Create .meta
-   cat > .meta << EOF
-{
-  "notion_page_id": "",
-  "last_sync_hash": "",
-  "last_sync_date": ""
-}
-EOF
 
    # Initialize git
    git init
@@ -85,48 +76,9 @@ EOF
    git commit -m "Initial commit: $NAME assistant"
    ```
 
-6. **Save to Notion:**
-   ```bash
-   source ~/.config/claude-code/notion-config.sh
-   DATABASE_ID="29686de33aad807fbea3edb4899d1d2b"
-
-   # Get GitHub URL from git remote if available
-   GITHUB_URL=$(git remote get-url origin 2>/dev/null || echo "")
-
-   # Parse assistant.md into Notion blocks
-   # (Use python script or manual construction)
-
-   RESPONSE=$(curl -s -X POST "https://api.notion.com/v1/pages" \
-     -H "Authorization: Bearer $NOTION_API_KEY" \
-     -H "Notion-Version: $NOTION_VERSION" \
-     -H "Content-Type: application/json" \
-     -d "{
-       \"parent\": { \"database_id\": \"$DATABASE_ID\" },
-       \"properties\": {
-         \"Nom\": { \"title\": [{ \"text\": { \"content\": \"$NAME\" } }] },
-         \"Description\": { \"rich_text\": [{ \"text\": { \"content\": \"$DESCRIPTION\" } }] },
-         \"Category\": { \"select\": { \"name\": \"$CATEGORY\" } },
-         \"Status\": { \"select\": { \"name\": \"$STATUS\" } },
-         \"github\": { \"url\": \"$GITHUB_URL\" }
-       },
-       \"children\": $BLOCKS
-     }")
-
-   # Extract page ID from response
-   PAGE_ID=$(echo "$RESPONSE" | jq -r '.id' | tr -d '-')
-
-   # Update .meta with Notion page ID
-   jq ".notion_page_id = \"$PAGE_ID\" | .last_sync_hash = \"$(git rev-parse HEAD)\" | .last_sync_date = \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"" .meta > .meta.tmp
-   mv .meta.tmp .meta
-
-   git add .meta
-   git commit -m "Link to Notion: $PAGE_ID"
-   ```
-
-7. **Report success:**
+6. **Report success:**
    - Show word count reduction (if compacted)
    - Display file path: `$REPO_DIR/assistant.md`
-   - Display Notion URL: `https://notion.so/[page-id]`
    - Suggest: "Load with `/load-assistant $SLUG`"
 
 ## Step 2b: Update Existing Assistant
@@ -146,87 +98,33 @@ If updating:
    ls -d ~/Documents/Dev/assistant-* | xargs -n1 basename
    ```
 
-2. **Check if sync needed:**
-   ```bash
-   cd "$REPO_DIR"
-
-   if [ ! -f .meta ]; then
-       echo "Warning: .meta file missing. Will create after sync."
-   else
-       CURRENT_HASH=$(git rev-parse HEAD 2>/dev/null || echo "")
-       LAST_SYNC_HASH=$(jq -r '.last_sync_hash' .meta 2>/dev/null || echo "")
-
-       if [ "$CURRENT_HASH" = "$LAST_SYNC_HASH" ] && [ -n "$CURRENT_HASH" ]; then
-           echo "Already synced - no changes since last sync"
-           # Ask if user wants to continue anyway
-       fi
-   fi
-   ```
-
-3. **Propose updates:**
+2. **Propose updates:**
    - Read current assistant.md
    - Review conversation for improvements
    - Show specific proposed changes
    - Get user approval
 
-4. **Update local file:**
+3. **Update local file:**
    ```bash
    # Apply changes using Edit tool
    # Or rewrite with Write tool if major changes
    ```
 
-5. **Compact if needed** (if word count grew >30%):
+4. **Compact if needed** (if word count grew >30%):
    - Check current vs original word count
    - If >300 words or >30% growth, suggest compacting
    - Load `docs/compacting.md` for guidance
    - Extract new verbose content to docs/
 
-6. **Commit changes:**
+5. **Commit changes:**
    ```bash
    git add assistant.md docs/
    git commit -m "Update: [description of changes]"
    ```
 
-7. **Sync to Notion** (only if changes made):
-   ```bash
-   PAGE_ID=$(jq -r '.notion_page_id' .meta)
-
-   # Get GitHub URL from git remote if available
-   GITHUB_URL=$(git remote get-url origin 2>/dev/null || echo "")
-
-   if [ -z "$PAGE_ID" ] || [ "$PAGE_ID" = "null" ]; then
-       echo "No Notion page linked. Create new page? (y/n)"
-       # If yes, create new page (same as Step 2a #6)
-   else
-       # Update existing page properties
-       curl -X PATCH "https://api.notion.com/v1/pages/$PAGE_ID" \
-         -H "Authorization: Bearer $NOTION_API_KEY" \
-         -H "Notion-Version: $NOTION_VERSION" \
-         -H "Content-Type: application/json" \
-         -d "{
-           \"properties\": {
-             \"Description\": { \"rich_text\": [{ \"text\": { \"content\": \"$DESCRIPTION\" } }] },
-             \"Status\": { \"select\": { \"name\": \"$STATUS\" } },
-             \"github\": { \"url\": \"$GITHUB_URL\" }
-           }
-         }"
-
-       # Update content blocks (archive old, append new)
-       # Or use full page replacement
-   fi
-
-   # Update .meta
-   jq ".last_sync_hash = \"$(git rev-parse HEAD)\" | .last_sync_date = \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"" .meta > .meta.tmp
-   mv .meta.tmp .meta
-
-   git add .meta
-   git commit -m "Sync to Notion: $(date +%Y-%m-%d)"
-   ```
-
-8. **Report success:**
+6. **Report success:**
    - Show changes made
    - Display word count (before/after if compacted)
-   - Confirm sync status
 
 ## Step 2c: Compact Assistant Only
 
@@ -272,10 +170,6 @@ If compacting only:
    git commit -m "Compact assistant: $ORIGINAL_WORDS → $NEW_WORDS words (-$REDUCTION%)"
    ```
 
-7. **Optionally sync to Notion:**
-   - Ask user if they want to sync compacted version
-   - If yes, follow Step 2b #7
-
 ## Smart Defaults
 
 **When gathering metadata, propose defaults based on context:**
@@ -292,20 +186,13 @@ If compacting only:
 
 **Present defaults to user for quick confirmation rather than asking each individually.**
 
-## Local-First Principle
+## Git-Only Principle
 
-**Always prioritize git over Notion:**
+**Git is the single source of truth:**
 
-1. Save to git repository first
+1. Save to git repository
 2. Commit changes
-3. Sync to Notion second (optional)
-4. Update .meta to track sync status
-5. Never fetch from Notion unless explicitly requested
-
-**Only sync to Notion when:**
-- User explicitly requests it
-- Changes have been made since last sync (check .meta)
-- Creating a new assistant for the first time
+3. All versioning managed by git
 
 ## Token Optimization
 
@@ -324,9 +211,7 @@ If compacting only:
 Before finishing, verify:
 - ✅ Git repository initialized/updated
 - ✅ Changes committed
-- ✅ .meta file created/updated
 - ✅ Word count reduced (if compacted)
-- ✅ Notion synced (if requested)
-- ✅ File paths and URLs provided to user
+- ✅ File paths provided to user
 
 Be efficient and clear. Don't over-explain - focus on execution.
